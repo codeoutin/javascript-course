@@ -1,0 +1,78 @@
+// Lesson 3: Factory Functions und Unterschiede zu Constructor Functions
+// Im letzten Teil haben wir Objekte mit Constructor Functions gebaut
+// Per Definition fangen diese mit einem Großbuchstaben an und man
+// ruft diese mit dem new Keyword auf, z.B.
+function Book(title, author, pages) {
+    // const this = {}        < automatisch durch JS
+    this.title = title
+    this.author = author
+    this.pages = pages
+    // return this            < automatisch durch JS 
+}
+const myBook = new Book('Wochenblatt KW 45', 'FAZ', 25) // < "Objekt Instantiierung"
+
+
+
+// Die gleiche Funktion als 'Factory Function' sieht folgendermaßen aus
+function bookFactory(title, author, pages) {
+    return { title, author, pages } // REFERENZ 1
+}
+const yourBook = bookFactory('Wochenblatt KW 46', 'FAZ', 23)
+
+
+// Zu REFERENZ 1: Ohne diese Kurzform, die JS 2015 eingeführt hat müssten wir schreiben:
+// { title: title, author: author, pages: pages }
+
+
+
+// Vorteile? Einfacher zu schreiben, Data Privacy, kein new Keyword nötig
+// Vergisst man z.B. das new Keyword, funktioniert das Programm nicht aber es gibt keine
+// klar erkennbare Error Nachricht aus
+
+
+// Siehe folgendes Beispiel
+function mathFunctions(a, b) {
+    const sum = () => a + b
+    const sub = () => a - b
+    const prod = () => a * b
+    return {sum, sub, prod}
+}
+
+const test1 = mathFunctions(10, 15)
+console.log(test1.sum())
+console.log(test1.sub())
+console.log(test1.prod())
+
+console.log(test1)
+// Es ist hier nicht mehr möglich (unabsichtlich) die Daten nachträglich zu verändern
+
+
+// Wichtig: Es gibt kein richtig / falsch, es ist gut sich bewusst zu machen wo die Limits 
+// und Unterschiede liegen. Mehr zu den Unterschieden: https://www.youtube.com/watch?v=fbuyliXlDGI
+
+// Funktionen bei Factory Functions werden zunächst kopiert und können angepasst werden
+// Wir ändern jetzt z.B. einmal die Methode "prod" bei einer Variable
+const test2 = mathFunctions(5, 7)
+test2.prod = () => 99
+console.log(test2.prod()) // 99, nicht 35
+console.log(test1.prod()) // weiterhin 150
+
+
+// Ein weiteres Beispiel um Scope und private Variablen zu verdeutlichen
+const counterCreator = () => {
+    let count = 0
+    return () => {
+        console.log(count)
+        count++
+    }
+}
+
+const counter = counterCreator()
+counter() // 0 < ruft die return Funktion von counterCreator auf
+counter() // 1
+counter() // 2
+counter() // 3
+counter = 25 // < nicht möglich!, 1. da const und 2. da die Variable count nicht beschreibbar ist, da sie nicht im return definiert wurde
+
+
+// Mehr zum Nachlesen: https://www.theodinproject.com/lessons/node-path-javascript-factory-functions-and-the-module-pattern

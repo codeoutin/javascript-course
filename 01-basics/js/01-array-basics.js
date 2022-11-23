@@ -23,13 +23,17 @@ const people = ['Beck', 'Glenn', 'Becker', 'Carl', 'Beckett', 'Samuel', ' Beddoe
 // Array.prototype.filter()
 // 1. Filtere die Liste inventors nach denen die in den 1500ern geboren sind
 
+
 // Array.prototype.map()
-// 2. Gebe ein Array zurück mit dem Vor- und Nachnamen der Erfinder
+// 2. Gebe ein array zurück mit den Vor- und Nachnamen der Erfinder (inventors)
+
 
 // Array.prototype.sort()
 // 3. Sortiere die Erfinder (inventors) nach Geburtsdatum, älteste zuerst
 
+
 // Array.prototype.reduce()
 // 4. Wie viele Jahre haben alle Erfinder zusammengezählt gelebt?
+
 
 // 5. Sortiere die Erfinder nach Lebenszeit
